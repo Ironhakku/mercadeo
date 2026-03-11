@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercadeo · Semanas 1–4 · FCA Univalle</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --uv-red:#C8102E; --uv-dark:#8B0B1F; --uv-mid:#E8142A;
+  --uv-off:#FAF7F5; --ink:#111; --ink2:#2E2E2E; --muted:#777; --border:#E8E0DC; --card:#fff;
+  --s1:#C8102E; --s2:#C05010; --s3:#7A1A6A; --s4:#0A5A88;
+  --r:18px; --sh:0 4px 24px rgba(0,0,0,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--uv-off);color:var(--ink);overflow-x:hidden}
+
+/* HERO */
+.hero{background:var(–uv-red);position:relative;overflow:hidden}
+.hero::before{content:’’;position:absolute;inset:0;background:linear-gradient(135deg,var(–uv-dark) 0%,var(–uv-red) 50%,#E84060 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);background-size:52px 52px}
+.hero-wm{position:absolute;right:-20px;bottom:-50px;font-family:‘Fraunces’,serif;font-weight:900;font-size:280px;line-height:1;color:rgba(255,255,255,.065);letter-spacing:-.04em;pointer-events:none;user-select:none}
+.hero-inner{position:relative;max-width:1060px;margin:0 auto;padding:3.8rem 2rem 3rem}
+.hero-tag{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);border-radius:40px;padding:.32rem .85rem;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:white;margin-bottom:1.1rem}
+.hero-tag .dot{width:7px;height:7px;background:#FFD700;border-radius:50%}
+.hero-title{font-family:‘Fraunces’,serif;font-size:clamp(2.5rem,7vw,4.8rem);font-weight:900;color:white;line-height:1;letter-spacing:-.025em}
+.hero-title em{font-style:italic;font-weight:300;color:rgba(255,255,255,.65)}
+.hero-sub{color:rgba(255,255,255,.7);font-size:.95rem;font-weight:300;margin-top:.9rem;max-width:480px;line-height:1.65}
+.hero-stats{display:flex;gap:1.2rem;margin-top:1.8rem;flex-wrap:wrap}
+.stat{text-align:center;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:.75rem 1.3rem}
+.stat-n{display:block;font-family:‘Fraunces’,serif;font-size:1.7rem;font-weight:900;color:#FFD700;line-height:1}
+.stat-l{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.6);margin-top:.2rem}
+
+/* TABS */
+.tabs-wrap{background:var(–ink);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.35)}
+.tabs-inner{max-width:1060px;margin:0 auto;display:flex;overflow-x:auto}
+.tab-btn{font-family:‘Plus Jakarta Sans’,sans-serif;font-size:.76rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);background:none;border:none;border-bottom:3px solid transparent;padding:1rem 1.3rem;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s,background .2s;display:flex;align-items:center;gap:.45rem}
+.tab-btn:hover{color:rgba(255,255,255,.8);background:rgba(255,255,255,.04)}
+.tab-btn.active{color:white;border-bottom-color:var(–uv-red)}
+.tab-n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(255,255,255,.1);border-radius:50%;font-size:.68rem;font-weight:900;transition:background .2s}
+.tab-btn.active .tab-n{background:var(–uv-red)}
+
+/* PROGRESS */
+.prog-strip{max-width:1060px;margin:1.8rem auto 0;padding:0 1.5rem}
+.prog-card{background:white;border:1px solid var(–border);border-radius:var(–r);padding:1.1rem 1.6rem;display:flex;align-items:center;gap:1.2rem;box-shadow:var(–sh)}
+.prog-left{flex:1;min-width:0}
+.prog-ttl{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(–muted);margin-bottom:.4rem}
+.prog-bar-out{height:10px;background:#F0E8E5;border-radius:5px;overflow:hidden}
+.prog-bar-in{height:100%;background:linear-gradient(90deg,var(–uv-red),var(–uv-mid));border-radius:5px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.prog-pct{font-family:‘Fraunces’,serif;font-size:1.9rem;font-weight:900;color:var(–uv-red);white-space:nowrap}
+
+/* MAIN */
+main{max-width:1060px;margin:1.4rem auto 5rem;padding:0 1.5rem}
+.session{display:none}
+.session.visible{display:block}
+
+/* SESSION BANNER */
+.s-banner{border-radius:var(–r);padding:2.3rem 2.5rem;margin-bottom:1.4rem;position:relative;overflow:hidden;color:white;animation:up .3s ease}
+.s-banner::after{content:’’;position:absolute;top:-40px;right:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.09);pointer-events:none}
+.s1 .s-banner{background:linear-gradient(135deg,var(–uv-dark),var(–uv-red),#E84260)}
+.s2 .s-banner{background:linear-gradient(135deg,#7A2800,var(–s2),#F07030)}
+.s3 .s-banner{background:linear-gradient(135deg,#4A0840,var(–s3),#B030A0)}
+.s4 .s-banner{background:linear-gradient(135deg,#032E4A,var(–s4),#1080C0)}
+.sb-wk{font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.7;margin-bottom:.5rem}
+.sb-ttl{font-family:‘Fraunces’,serif;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:900;line-height:1.12;margin-bottom:.5rem}
+.sb-pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.8rem}
+.sb-pill{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:.22rem .65rem;font-size:.7rem;font-weight:700;letter-spacing:.05em}
+
+/* CARDS */
+.card{background:var(–card);border:1px solid var(–border);border-radius:var(–r);padding:2rem 2.2rem;margin-bottom:1.4rem;box-shadow:var(–sh);animation:up .35s ease}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.c-label{font-size:.67rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.55rem}
+.card h2{font-family:‘Fraunces’,serif;font-size:1.5rem;font-weight:900;line-height:1.2;margin-bottom:.9rem}
+.card p,.card li{font-size:.95rem;line-height:1.78;color:var(–ink2);font-weight:300}
+.card ul,.card ol{padding-left:1.4rem;margin-top:.5rem}
+.card li{margin-bottom:.4rem}
+strong{font-weight:700;color:var(–ink)}
+
+.s1 .c-label,.s1 .chip h4{color:var(–s1)}
+.s2 .c-label,.s2 .chip h4{color:var(–s2)}
+.s3 .c-label,.s3 .chip h4{color:var(–s3)}
+.s4 .c-label,.s4 .chip h4{color:var(–s4)}
+
+/* ACCENT BAR */
+.abar{height:5px;width:48px;border-radius:3px;margin-bottom:1.2rem}
+.s1 .abar{background:var(–s1)}.s2 .abar{background:var(–s2)}.s3 .abar{background:var(–s3)}.s4 .abar{background:var(–s4)}
+
+/* ANALOGY */
+.analogy{position:relative;background:linear-gradient(135deg,#FFF8F0,#FEF0E6);border-radius:14px;padding:1.4rem 1.6rem 1.4rem 1.9rem;margin:1.2rem 0;overflow:hidden}
+.analogy::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,var(–uv-red),#F07030);border-radius:3px 0 0 3px}
+.a-icon{font-size:1.9rem;margin-bottom:.3rem;display:block}
+.a-tag{font-size:.67rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(–uv-dark);margin-bottom:.3rem}
+.analogy p{color:#5A2800;font-size:.94rem;font-weight:400}
+
+/* SECTION DIVIDER */
+.sdiv{font-family:‘Fraunces’,serif;font-size:1.05rem;font-weight:700;margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.6rem}
+.sdiv::after{content:’’;flex:1;height:1px;background:var(–border)}
+
+/* CHIPS */
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:.85rem;margin-top:.7rem}
+.chip{background:var(–uv-off);border:1.5px solid var(–border);border-radius:14px;padding:1.1rem 1.2rem;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s;position:relative;overflow:hidden}
+.chip::before{content:’’;position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .2s}
+.s1 .chip::before{background:var(–s1)}.s2 .chip::before{background:var(–s2)}.s3 .chip::before{background:var(–s3)}.s4 .chip::before{background:var(–s4)}
+.chip:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,.1);border-color:#ccc}
+.chip:hover::before,.chip.open::before{opacity:1}
+.chip.open{border-color:currentColor}
+.chip-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.4rem}
+.chip h4{font-size:.88rem;font-weight:800;line-height:1.2}
+.chip>p{font-size:.78rem;color:var(–muted);margin-top:.22rem;font-weight:400}
+.expand{display:none;margin-top:.7rem;font-size:.83rem;line-height:1.6;color:var(–ink2);font-weight:300;border-top:1px solid var(–border);padding-top:.6rem}
+.chip.open .expand{display:block}
+.tog{font-size:1.1rem;line-height:1;color:var(–muted);flex-shrink:0;transition:transform .2s,color .2s}
+.chip.open .tog{transform:rotate(45deg);color:var(–uv-red)}
+
+/* DEBATE */
+.debate{background:var(–ink);border-radius:var(–r);padding:1.9rem 2rem;color:white;position:relative;overflow:hidden}
+.debate::before{content:‘💬’;position:absolute;right:1.5rem;top:.8rem;font-size:4rem;opacity:.08}
+.dq{font-family:‘Fraunces’,serif;font-size:1.15rem;font-weight:700;line-height:1.4;color:white;margin:.8rem 0 .5rem}
+.debate p{color:rgba(255,255,255,.65);font-size:.9rem}
+.debate strong{color:white}
+.timer-row{display:flex;align-items:center;gap:1.2rem;margin-top:1.2rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:.95rem 1.4rem}
+.t-num{font-family:‘Fraunces’,serif;font-size:2.3rem;font-weight:900;color:#FFD700;min-width:82px;letter-spacing:.03em}
+.t-meta{font-size:.72rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em}
+.t-ctrl{margin-left:auto;display:flex;gap:.5rem}
+.tbtn{padding:.55rem 1.2rem;border-radius:8px;border:none;cursor:pointer;font-family:‘Plus Jakarta Sans’,sans-serif;font-size:.8rem;font-weight:800;letter-spacing:.04em;transition:transform .15s}
+.tbtn:hover{transform:scale(1.04)}
+.tbtn-s{background:var(–uv-red);color:white}
+.tbtn-r{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8)}
+
+/* EXERCISE */
+.ex{background:linear-gradient(135deg,#FAFAFA,#F4EEF0);border:1.5px dashed #D0B4BA;border-radius:var(–r);padding:1.6rem 1.8rem;margin-top:1rem}
+.ex h4{font-family:‘Fraunces’,serif;font-size:1.02rem;font-weight:700;margin-bottom:.9rem;display:flex;align-items:center;gap:.4rem}
+.ex ol{padding-left:0;counter-reset:s;list-style:none}
+.ex ol li{counter-increment:s;margin-bottom:.65rem;font-size:.91rem;position:relative;padding-left:2rem;color:var(–ink2);font-weight:300}
+.ex ol li::before{content:counter(s);position:absolute;left:0;top:.05rem;width:22px;height:22px;background:var(–uv-red);color:white;border-radius:50%;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+.tools-lbl{font-size:.72rem;font-weight:800;color:var(–muted);text-transform:uppercase;letter-spacing:.1em;margin:1.1rem 0 .5rem}
+.tools-row{display:flex;flex-wrap:wrap;gap:.4rem}
+.tool{display:inline-flex;align-items:center;gap:.35rem;background:white;border:1.5px solid var(–border);border-radius:24px;padding:.3rem .8rem;font-size:.78rem;font-weight:700;text-decoration:none;color:var(–ink);transition:box-shadow .18s,transform .18s,border-color .18s;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tool:hover{box-shadow:0 4px 14px rgba(0,0,0,.12);transform:translateY(-2px);border-color:#bbb}
+.tdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+
+/* CALLOUT */
+.callout{border-radius:12px;padding:1rem 1.3rem;margin:1rem 0;display:flex;gap:.7rem;align-items:flex-start}
+.callout.info{background:#EFF6FF;border:1px solid #BFDBFE}
+.callout-icon{font-size:1.2rem;margin-top:.1rem;flex-shrink:0}
+.callout p{font-size:.88rem;line-height:1.55;color:var(–ink2)}
+
+/* TIMELINE */
+.tl{margin-top:.6rem}
+.tl-s{display:flex;gap:1rem;margin-bottom:1rem;position:relative}
+.tl-s:not(:last-child)::after{content:’’;position:absolute;left:19px;top:40px;bottom:-10px;width:2px;background:var(–border)}
+.tl-ic{width:40px;height:40px;border-radius:50%;background:var(–uv-red);color:white;font-size:.8rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:‘Fraunces’,serif;box-shadow:0 3px 10px rgba(200,16,46,.35);position:relative;z-index:1}
+.tl-b{padding-top:.35rem}
+.tl-b strong{font-size:.93rem;font-weight:700;display:block;margin-bottom:.18rem}
+.tl-b span{font-size:.87rem;color:var(–muted);font-weight:300;line-height:1.5}
+
+/* QUIZ */
+.qwrap{margin-top:.3rem}
+.q-cnt{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(–muted);margin-bottom:.75rem}
+.q-txt{font-family:‘Fraunces’,serif;font-size:1.1rem;font-weight:700;line-height:1.45;margin-bottom:1rem;color:var(–ink)}
+.q-opts{display:flex;flex-direction:column;gap:.5rem}
+.qo{text-align:left;padding:.8rem 1.1rem;background:var(–uv-off);border:1.5px solid var(–border);border-radius:12px;cursor:pointer;font-family:‘Plus Jakarta Sans’,sans-serif;font-size:.9rem;font-weight:400;color:var(–ink2);transition:background .15s,border-color .15s,transform .12s}
+.qo:hover:not(:disabled){background:#F0E8E5;border-color:#C0A8B0;transform:translateX(4px)}
+.qo.correct{background:#ECFDF5;border-color:#059669;color:#064E3B;font-weight:600}
+.qo.wrong{background:#FEF2F2;border-color:#DC2626;color:#7F1D1D}
+.qo:disabled{cursor:default;transform:none}
+.q-fb{margin-top:.8rem;font-size:.86rem;line-height:1.5;min-height:1.3rem;padding:.5rem .8rem;border-radius:8px}
+.q-fb.ok{background:#ECFDF5;color:#065F46;font-weight:500}
+.q-fb.err{background:#FEF2F2;color:#991B1B;font-weight:500}
+.q-nxt{margin-top:.9rem;padding:.6rem 1.5rem;background:var(–uv-red);color:white;border:none;border-radius:10px;cursor:pointer;font-family:‘Plus Jakarta Sans’,sans-serif;font-size:.8rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;display:none;transition:background .18s,transform .15s}
+.q-nxt:hover{background:var(–uv-dark);transform:translateY(-2px)}
+.q-done{text-align:center;padding:2rem 1rem}
+.q-done .ck{font-size:3rem;display:block;margin-bottom:.6rem}
+.q-done p{font-size:1rem;color:var(–ink2)}
+.q-done strong{color:var(–uv-red)}
+
+.tab-parcial{border-left:1px solid rgba(255,255,255,.12)!important}
+.tab-parcial.active{color:#FFD700!important;border-bottom-color:#FFD700!important}
+.tab-parcial .tab-n-p{background:rgba(255,215,0,.18)!important}
+.tab-parcial.active .tab-n-p{background:#FFD700!important;color:var(–ink)!important}
+
+/* PARCIAL SESSION */
+.s5 .s-banner{background:linear-gradient(135deg,#1A0A00,#5A2800,#C05010)}
+.s5 .abar{background:#C05010}
+.s5 .c-label{color:#C05010}
+.parcial-hero{background:linear-gradient(135deg,var(–uv-dark),var(–uv-red));border-radius:var(–r);padding:2.5rem 2.4rem;margin-bottom:1.4rem;color:white;position:relative;overflow:hidden}
+.parcial-hero::before{content:’’;position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width=‘60’ height=‘60’ viewBox=‘0 0 60 60’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=‘none’ fill-rule=‘evenodd’%3E%3Cg fill=’%23ffffff’ fill-opacity=‘0.05’%3E%3Cpath d=‘M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z’/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.parcial-hero::after{content:’’;position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.ph-tag{font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;background:rgba(255,215,0,.25);border:1px solid rgba(255,215,0,.4);border-radius:20px;display:inline-block;padding:.22rem .7rem;color:#FFD700;margin-bottom:.8rem}
+.ph-title{font-family:‘Fraunces’,serif;font-size:clamp(1.6rem,4vw,2.5rem);font-weight:900;line-height:1.1;margin-bottom:.5rem}
+.ph-sub{font-size:.95rem;opacity:.75;font-weight:300;line-height:1.6;max-width:560px;margin-bottom:1.2rem}
+.ph-pills{display:flex;gap:.4rem;flex-wrap:wrap}
+.ph-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:.22rem .65rem;font-size:.7rem;font-weight:700;letter-spacing:.05em}
+.ph-pill.gold{background:rgba(255,215,0,.2);border-color:rgba(255,215,0,.5);color:#FFD700}
+
+/* Part banners */
+.part-banner{border-radius:12px;padding:1.1rem 1.5rem;margin:0 0 1rem;display:flex;align-items:center;gap:1rem;position:relative;overflow:hidden}
+.part-banner::before{content:’’;position:absolute;left:0;top:0;bottom:0;width:5px}
+.pb-red{background:linear-gradient(90deg,#FFF0F2,#FFF5F6);border:1px solid #FFD0D8}
+.pb-red::before{background:var(–uv-red)}
+.pb-purple{background:linear-gradient(90deg,#F8F0FF,#FCF5FF);border:1px solid #E0C8FF}
+.pb-purple::before{background:var(–s3)}
+.pb-blue{background:linear-gradient(90deg,#EFF6FF,#F5F9FF);border:1px solid #BFD8FF}
+.pb-blue::before{background:var(–s4)}
+.pb-dark{background:linear-gradient(90deg,#F5F5F5,#FAFAFA);border:1px solid #DDD}
+.pb-dark::before{background:var(–ink)}
+.pb-num{font-family:‘Fraunces’,serif;font-size:2rem;font-weight:900;line-height:1;min-width:2.5rem}
+.pb-red .pb-num{color:var(–uv-red)}
+.pb-purple .pb-num{color:var(–s3)}
+.pb-blue .pb-num{color:var(–s4)}
+.pb-dark .pb-num{color:var(–ink)}
+.pb-right h3{font-family:‘Fraunces’,serif;font-size:1.1rem;font-weight:700;margin-bottom:.15rem}
+.pb-right p{font-size:.82rem;color:var(–muted);font-weight:300}
+.pb-sem-tag{font-size:.67rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .55rem;border-radius:20px;margin-left:.5rem}
+.tag-red{background:#FFE8EC;color:var(–uv-red)}
+.tag-purple{background:#F3E8FF;color:var(–s3)}
+.tag-blue{background:#E8F2FF;color:var(–s4)}
+
+/* Steps */
+.step-list{counter-reset:st;margin-top:.5rem}
+.step-item{counter-increment:st;display:flex;gap:.9rem;margin-bottom:.85rem;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(–uv-red);color:white;font-size:.75rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:‘Fraunces’,serif;margin-top:.1rem;box-shadow:0 2px 8px rgba(200,16,46,.3)}
+.step-body{flex:1}
+.step-body strong{font-size:.95rem;font-weight:700;display:block;margin-bottom:.18rem;color:var(–ink)}
+.step-body p{font-size:.88rem;color:var(–ink2);font-weight:300;line-height:1.6;margin:0}
+.step-note{font-size:.8rem;color:var(–muted);font-style:italic;margin-top:.2rem}
+
+/* Criteria cards */
+.criteria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem;margin-top:.8rem}
+.crit-card{border-radius:14px;padding:1.1rem 1.2rem;border:1.5px solid var(–border)}
+.crit-pts{font-family:‘Fraunces’,serif;font-size:1.9rem;font-weight:900;line-height:1;margin-bottom:.3rem}
+.crit-title{font-size:.85rem;font-weight:800;margin-bottom:.25rem}
+.crit-desc{font-size:.78rem;color:var(–muted);font-weight:300;line-height:1.5}
+.cc-red{background:#FFF0F2;border-color:#FFB0BC}.cc-red .crit-pts{color:var(–uv-red)}
+.cc-purple{background:#F8F0FF;border-color:#DDB8FF}.cc-purple .crit-pts{color:var(–s3)}
+.cc-blue{background:#EFF6FF;border-color:#B0CCFF}.cc-blue .crit-pts{color:var(–s4)}
+.cc-dark{background:#F5F5F5;border-color:#CCC}.cc-dark .crit-pts{color:var(–ink)}
+.cc-gold{background:#FFFBEB;border-color:#FFE08A}.cc-gold .crit-pts{color:#B45309}
+
+/* Warning box */
+.warn-box{background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:12px;padding:1rem 1.3rem;margin:.6rem 0;display:flex;gap:.7rem;align-items:flex-start}
+.warn-box p{font-size:.88rem;line-height:1.55;color:#78350F}
+.info-row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.6rem}
+.info-pill{display:inline-flex;align-items:center;gap:.4rem;background:white;border:1.5px solid var(–border);border-radius:10px;padding:.45rem .9rem;font-size:.82rem;font-weight:500;color:var(–ink2)}
+.info-pill strong{font-weight:800;color:var(–ink)}
+
+/* Download button */
+.dl-btn-wrap{text-align:center;margin:1.4rem 0 .5rem}
+.dl-btn{display:inline-flex;align-items:center;gap:.6rem;background:var(–uv-red);color:white;text-decoration:none;border-radius:12px;padding:.9rem 2rem;font-family:‘Plus Jakarta Sans’,sans-serif;font-size:.92rem;font-weight:800;letter-spacing:.04em;transition:background .18s,transform .15s,box-shadow .18s;box-shadow:0 4px 16px rgba(200,16,46,.35)}
+.dl-btn:hover{background:var(–uv-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,16,46,.4);color:white}
+.dl-btn svg{flex-shrink:0}
+.chips{grid-template-columns:1fr 1fr}
+.hero-stats{gap:.8rem}
+.card{padding:1.4rem 1.2rem}
+.ex{padding:1.2rem}
+.s-banner{padding:1.6rem}
+}
+@media(max-width:420px){.chips{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-wm">UV</div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="dot"></span> FCA · Administración de Empresas · 2026-1</div>
+    <h1 class="hero-title">Mercadeo<br><em>Interactivo</em></h1>
+    <p class="hero-sub">Módulo de aprendizaje · Semanas 1 a 4<br>Fundamentos Estratégicos &amp; Comportamiento del Consumidor</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Sesiones</span></div>
+      <div class="stat"><span class="stat-n">12</span><span class="stat-l">Quiz</span></div>
+      <div class="stat"><span class="stat-n">4</span><span class="stat-l">Talleres ABP</span></div>
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Créditos</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+
+<div class="tabs-wrap">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="showS(1,this)"><span class="tab-n">1</span> Evolución del Mkt</button>
+    <button class="tab-btn" onclick="showS(2,this)"><span class="tab-n">2</span> Plan &amp; Canvas</button>
+    <button class="tab-btn" onclick="showS(3,this)"><span class="tab-n">3</span> Entorno</button>
+    <button class="tab-btn" onclick="showS(4,this)"><span class="tab-n">4</span> Consumidor</button>
+    <button class="tab-btn tab-parcial" onclick="showS(5,this)"><span class="tab-n tab-n-p">★</span> Parcial Corte 1</button>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+
+<div class="prog-strip">
+  <div class="prog-card">
+    <div class="prog-left">
+      <div class="prog-ttl">Progreso del módulo</div>
+      <div class="prog-bar-out"><div class="prog-bar-in" id="pbar" style="width:0%"></div></div>
+    </div>
+    <div class="prog-pct" id="ppct">0%</div>
+  </div>
+</div>
+
+<main>
+
+<!-- ══ SEMANA 1 ══ -->
+
+<section class="session visible s1" id="s-1">
+  <div class="s-banner">
+    <div class="sb-wk">Semana 1 · 11 de Febrero</div>
+    <div class="sb-ttl">Concepto y Evolución<br>del Marketing</div>
+    <div class="sb-pills"><span class="sb-pill">RA-PAAE-02</span><span class="sb-pill">RA-PAAE-03</span><span class="sb-pill">Debate · ABP · Pitch</span></div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">📖 Teoría fundamental</div>
+    <h2>¿Qué es el Marketing?</h2>
+    <div class="abar"></div>
+    <p>El marketing es el proceso de <strong>identificar, crear, comunicar y entregar valor</strong> para satisfacer necesidades humanas y organizacionales. Va mucho más allá de la publicidad: es la disciplina que conecta la oferta con la demanda de forma estratégica y sostenible.</p>
+    <div class="analogy">
+      <span class="a-icon">🧭</span>
+      <div class="a-tag">Analogía del Docente</div>
+      <p>El marketing es como un <strong>GPS inteligente</strong>: sin él, sabes que quieres llegar a algún lado (vender), pero no tienes la ruta óptima. El GPS analiza el tráfico (mercado), detecta obstáculos (competencia) y recalcula cuando cambias de dirección (pivot estratégico). Conducir sin GPS es improvisar; con GPS es estrategiar.</p>
+    </div>
+    <div class="sdiv">Conceptos clave -- haz clic para expandir</div>
+    <div class="chips">
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Necesidad</h4><span class="tog">＋</span></div><p>Estado de carencia percibida</p><div class="expand">Una necesidad es básica y universal: hambre, abrigo, seguridad, amor. El marketing <em>no las crea</em>; las detecta para satisfacerlas. Ignorar una necesidad real es el fracaso más frecuente.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Deseo</h4><span class="tog">＋</span></div><p>Forma cultural de la necesidad</p><div class="expand">El deseo es la necesidad moldeada por la cultura y la personalidad. Sed (necesidad) → quiero una gaseosa helada de cierta marca (deseo). Aquí opera el marketing diferencial.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Demanda</h4><span class="tog">＋</span></div><p>Deseo + poder de compra</p><div class="expand">La demanda es el deseo respaldado por capacidad adquisitiva. Un cliente puede desear un Tesla, pero si no tiene poder de compra, no es demanda. El marketing trabaja con demandas reales o latentes.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Prosumidor</h4><span class="tog">＋</span></div><p>Consumidor que también produce</p><div class="expand">El prosumidor crea reseñas, contenido UGC, tutoriales y recomendaciones virales. Es cliente Y co-creador de marca simultáneamente. TikTok y YouTube son ecosistemas de prosumidores.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Valor percibido</h4><span class="tog">＋</span></div><p>Beneficio menos costo total</p><div class="expand">El cliente no compra un producto; compra la diferencia entre lo que recibe (funcional + emocional + social) y lo que paga (precio + tiempo + energía). Si valor > costo, hay compra.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Intercambio</h4><span class="tog">＋</span></div><p>Núcleo de toda transacción</p><div class="expand">El marketing existe porque dos partes tienen algo que la otra valora y acuerdan intercambiarlo voluntariamente. Sin intercambio libre y mutuamente beneficioso, no hay marketing ético.</div></div>
+    </div>
+    <div class="sdiv">Las 5 Eras del Marketing</div>
+    <div class="tl">
+      <div class="tl-s"><div class="tl-ic">1</div><div class="tl-b"><strong>Era de Producción (hasta 1920s)</strong><span>"Si lo fabricamos, se vende." Foco en eficiencia y producción masiva sin pensar en el cliente.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">2</div><div class="tl-b"><strong>Era de Ventas (1920s–50s)</strong><span>Producción excesiva obliga a vender agresivamente lo que ya está fabricado.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">3</div><div class="tl-b"><strong>Era de Marketing (1950s–80s)</strong><span>Primero entender qué quiere el cliente, luego producirlo. Nace la investigación de mercados.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">4</div><div class="tl-b"><strong>Era Relacional (1990s–2010)</strong><span>Fidelizar es más rentable que adquirir. CRM, NPS, experiencia del cliente y comunidades.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">5</div><div class="tl-b"><strong>Marketing 5.0 (2010–hoy)</strong><span>IA, Big Data, hiperpersonalización, omnicanalidad y propósito de marca con impacto social.</span></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🗣️ Apertura · Debate Estratégico</div>
+    <div class="debate">
+      <div class="sb-wk" style="color:rgba(255,255,255,.5)">Pregunta detonadora</div>
+      <div class="dq">¿El marketing digital reemplaza al clásico, o son dos caras de la misma moneda?</div>
+      <p>Formen equipos de <strong>3–4 personas</strong>. Cada equipo defiende una postura durante 5 minutos, luego debate abierto.</p>
+      <div class="timer-row">
+        <div><div class="t-num" id="t1">05:00</div><div class="t-meta">Temporizador</div></div>
+        <div class="t-ctrl"><button class="tbtn tbtn-s" onclick="tgTimer('t1',this)">▶ Iniciar</button><button class="tbtn tbtn-r" onclick="rstTimer('t1')">↺</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🛠️ Taller ABP</div>
+    <h2>Análisis de Campañas Reales</h2>
+    <div class="abar"></div>
+    <p>Aplica los conceptos de la sesión analizando una campaña publicitaria real.</p>
+    <div class="ex">
+      <h4>🎯 Instrucciones paso a paso</h4>
+      <ol>
+        <li>Elige una campaña colombiana o latinoamericana de los últimos 2 años (redes, TV o vía pública).</li>
+        <li>Identifica qué <strong>necesidad, deseo o demanda</strong> satisface la campaña.</li>
+        <li>Clasifícala en la <strong>era del marketing</strong> a la que pertenece según su enfoque comunicativo.</li>
+        <li>Analiza si usa elementos de <strong>prosumidor</strong> (UGC, hashtags, retos virales, reseñas).</li>
+        <li>Prepara un <strong>Pitch de 2 minutos</strong> para presentar tus hallazgos al grupo.</li>
+      </ol>
+      <div class="tools-lbl">🔧 Herramientas gratuitas</div>
+      <div class="tools-row">
+        <a class="tool" href="https://www.canva.com" target="_blank"><span class="tdot" style="background:#00C4CC"></span>Canva</a>
+        <a class="tool" href="https://miro.com" target="_blank"><span class="tdot" style="background:#FFD02F"></span>Miro</a>
+        <a class="tool" href="https://www.youtube.com" target="_blank"><span class="tdot" style="background:#FF0000"></span>YouTube</a>
+        <a class="tool" href="https://answerthepublic.com" target="_blank"><span class="tdot" style="background:#E84D3D"></span>AnswerThePublic</a>
+        <a class="tool" href="https://trends.google.com" target="_blank"><span class="tdot" style="background:#4285F4"></span>Google Trends</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">✅ Autoevaluación</div>
+    <h2>Comprueba tu comprensión</h2>
+    <div class="abar"></div>
+    <div class="qwrap" id="q-s1"></div>
+  </div>
+</section>
+
+<!-- ══ SEMANA 2 ══ -->
+
+<section class="session s2" id="s-2">
+  <div class="s-banner">
+    <div class="sb-wk">Semana 2 · 18 de Febrero</div>
+    <div class="sb-ttl">Plan Estratégico de Marketing<br>y Modelos Ágiles</div>
+    <div class="sb-pills"><span class="sb-pill">RA-PAAE-01</span><span class="sb-pill">Canvas · Océano Azul</span></div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">📖 Teoría fundamental</div>
+    <h2>Plan Estratégico de Marketing</h2>
+    <div class="abar"></div>
+    <p>Es el documento que articula la <strong>misión, análisis del entorno, objetivos, estrategias y métricas</strong> para crear y entregar valor en el mercado. Responde: ¿Dónde estamos? ¿A dónde vamos? ¿Cómo llegaremos?</p>
+    <div class="analogy">
+      <span class="a-icon">👨‍🍳</span>
+      <div class="a-tag">Analogía del Docente</div>
+      <p>Un Plan Estratégico es como la <strong>receta de un chef premiado</strong>: tienes los ingredientes (recursos), conoces el paladar del comensal (cliente), defines el plato final (producto) y los tiempos de cocción (cronograma). Sin receta, improvisas y no escalas. Con ella, replicas el éxito con precisión.</p>
+    </div>
+    <div class="sdiv">Business Model Canvas -- los 9 bloques</div>
+    <div class="chips">
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Segmentos de Clientes</h4><span class="tog">＋</span></div><p>¿Para quién creamos valor?</p><div class="expand">Define los grupos de personas u organizaciones a los que sirve la empresa. Puede atender un segmento masivo, nicho, segmentado o diversificado.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Propuesta de Valor</h4><span class="tog">＋</span></div><p>¿Qué problema resolvemos?</p><div class="expand">Corazón del Canvas. La razón por la que el cliente te elige sobre la competencia: precio, novedad, desempeño, personalización, diseño, marca o reducción de riesgo.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Canales</h4><span class="tog">＋</span></div><p>¿Cómo llegamos al cliente?</p><div class="expand">Puntos de contacto para comunicar y entregar la propuesta: tiendas físicas, e-commerce, apps, redes sociales, distribuidores. Deben ser eficientes y agradables.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Relación con Clientes</h4><span class="tog">＋</span></div><p>¿Qué tipo de vínculo?</p><div class="expand">Autoservicio, asistencia personal, automatizada, comunidades, co-creación. El tipo de vínculo determina la experiencia y la retención a largo plazo.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Fuentes de Ingresos</h4><span class="tog">＋</span></div><p>¿Cómo generamos dinero?</p><div class="expand">Venta de activos, suscripción, licencia, publicidad, Freemium. Cada fuente tiene una estructura de precios fija o dinámica según el modelo.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Recursos Clave</h4><span class="tog">＋</span></div><p>¿Qué activos necesitamos?</p><div class="expand">Físicos (fábricas), intelectuales (patentes, datos, marca), humanos (talento) y financieros. Son los habilitadores del modelo de negocio.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Actividades Clave</h4><span class="tog">＋</span></div><p>¿Qué hacemos mejor?</p><div class="expand">Producción, resolución de problemas, gestión de plataformas. Son las acciones sin las cuales el modelo sencillamente no funciona.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Socios Clave</h4><span class="tog">＋</span></div><p>¿Quiénes nos complementan?</p><div class="expand">Alianzas, proveedores críticos, joint ventures. Reducen riesgo o aportan recursos que no conviene desarrollar internamente.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>Estructura de Costos</h4><span class="tog">＋</span></div><p>¿Cuánto cuesta operar?</p><div class="expand">Costos fijos vs. variables. Economías de escala y alcance. ¿El modelo es impulsado por costo (eficiencia) o por valor (premium)?</div></div>
+    </div>
+    <div class="callout info" style="margin-top:1.2rem">
+      <span class="callout-icon">💡</span>
+      <p><strong>Océano Azul:</strong> Kim &amp; Mauborgne proponen crear un espacio de mercado sin competencia mediante innovación en valor -- eliminar, reducir, aumentar y <em>crear</em> atributos que la industria nunca ha ofrecido. Hacer irrelevante a la competencia en lugar de combatirla.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🗣️ Apertura · Debate Estratégico</div>
+    <div class="debate">
+      <div class="sb-wk" style="color:rgba(255,255,255,.5)">Pregunta detonadora</div>
+      <div class="dq">¿Puede una empresa tradicional (banco, retail, universidad) ser realmente ágil, o es solo una moda corporativa?</div>
+      <p>Debatan qué <strong>bloquea la agilidad</strong> en organizaciones establecidas y cómo superarlo.</p>
+      <div class="timer-row">
+        <div><div class="t-num" id="t2">05:00</div><div class="t-meta">Temporizador</div></div>
+        <div class="t-ctrl"><button class="tbtn tbtn-s" onclick="tgTimer('t2',this)">▶ Iniciar</button><button class="tbtn tbtn-r" onclick="rstTimer('t2')">↺</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🛠️ Taller ABP</div>
+    <h2>Construcción del Business Model Canvas</h2>
+    <div class="abar"></div>
+    <div class="ex">
+      <h4>🎯 Instrucciones paso a paso</h4>
+      <ol>
+        <li>Elige una empresa real: startup, PYME local o negocio familiar. Usarás esta misma empresa en las semanas siguientes.</li>
+        <li>Accede a Canva o Miro y construye el Canvas con los <strong>9 bloques completos</strong>.</li>
+        <li>Identifica la <strong>Propuesta de Valor</strong> central y cómo se diferencia de la competencia.</li>
+        <li>Detecta el bloque más débil del modelo y propón una mejora concreta y factible.</li>
+        <li>Pitch de <strong>3 minutos</strong>: expón el lienzo y tu propuesta de mejora.</li>
+      </ol>
+      <div class="tools-lbl">🔧 Herramientas gratuitas</div>
+      <div class="tools-row">
+        <a class="tool" href="https://www.canva.com/create/business-model-canvas/" target="_blank"><span class="tdot" style="background:#00C4CC"></span>Canvas en Canva</a>
+        <a class="tool" href="https://miro.com/templates/business-model-canvas/" target="_blank"><span class="tdot" style="background:#FFD02F"></span>Canvas en Miro</a>
+        <a class="tool" href="https://strategyzer.com/canvas" target="_blank"><span class="tdot" style="background:#EB5757"></span>Strategyzer</a>
+        <a class="tool" href="https://www.notion.so" target="_blank"><span class="tdot" style="background:#111"></span>Notion</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">✅ Autoevaluación</div>
+    <h2>Comprueba tu comprensión</h2>
+    <div class="abar"></div>
+    <div class="qwrap" id="q-s2"></div>
+  </div>
+</section>
+
+<!-- ══ SEMANA 3 ══ -->
+
+<section class="session s3" id="s-3">
+  <div class="s-banner">
+    <div class="sb-wk">Semana 3 · 25 de Febrero</div>
+    <div class="sb-ttl">Análisis del Entorno<br>Micro y Macro</div>
+    <div class="sb-pills"><span class="sb-pill">RA-PAAE-01</span><span class="sb-pill">RA-PAAE-04</span><span class="sb-pill">PESTEL · Porter · DOFA</span></div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">📖 Teoría fundamental</div>
+    <h2>PESTEL y las 5 Fuerzas de Porter</h2>
+    <div class="abar"></div>
+    <p>El análisis del entorno permite identificar oportunidades y amenazas <strong>antes</strong> de diseñar cualquier estrategia. Opera en dos niveles: macro (fuera del sector) y micro (dentro del sector).</p>
+    <div class="analogy">
+      <span class="a-icon">🏔️</span>
+      <div class="a-tag">Analogía del Docente</div>
+      <p>Eres un alpinista antes de escalar el Everest. El análisis <strong>MACRO (PESTEL)</strong> es estudiar el clima global, restricciones gubernamentales y rutas geopolíticas. Las <strong>5 Fuerzas (MICRO)</strong> son evaluar a los otros alpinistas, las agencias de guías y los proveedores de equipo en el campo base. Sin ambos análisis, el ascenso es un suicidio estratégico.</p>
+    </div>
+    <div class="sdiv">PESTEL -- Macroentorno</div>
+    <div class="chips">
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🏛️ Político</h4><span class="tog">＋</span></div><p>Estabilidad, regulaciones</p><div class="expand">Políticas comerciales, aranceles, TLC, estabilidad gubernamental. Afectan la operación, expansión y estrategia de precios en Colombia y el exterior.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>💰 Económico</h4><span class="tog">＋</span></div><p>PIB, inflación, desempleo</p><div class="expand">Tasas de interés, poder adquisitivo, ciclos económicos, devaluación del peso. Determinan la capacidad de compra real del mercado colombiano.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>👥 Social</h4><span class="tog">＋</span></div><p>Demografía, tendencias</p><div class="expand">Cultura, valores, estilos de vida, estructura generacional (Millennials, Gen Z). Moldean deseos y expectativas del consumidor en Cali y el Valle del Cauca.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>💻 Tecnológico</h4><span class="tog">＋</span></div><p>IA, digitalización</p><div class="expand">Automatización, nuevas plataformas digitales, IA generativa, e-commerce. Crean diferenciación o amenazan modelos de negocio obsoletos.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🌿 Ecológico</h4><span class="tog">＋</span></div><p>Sostenibilidad ambiental</p><div class="expand">Cambio climático, regulaciones ambientales, economía circular. Consumidores conscientes premian cada vez más a las marcas sostenibles.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>⚖️ Legal</h4><span class="tog">＋</span></div><p>Legislación y normativas</p><div class="expand">Ley de Habeas Data (1581/2012), propiedad intelectual, normativas de publicidad engañosa, regulación de e-commerce en Colombia.</div></div>
+    </div>
+    <div class="sdiv">5 Fuerzas de Porter -- Microentorno</div>
+    <div class="chips">
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>⚔️ Rivalidad</h4><span class="tog">＋</span></div><p>Intensidad competitiva actual</p><div class="expand">A mayor rivalidad, menores márgenes. Factores: número de competidores, crecimiento del sector, diferenciación de producto y costos de cambio.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🚪 Nuevos Entrantes</h4><span class="tog">＋</span></div><p>Barreras de entrada</p><div class="expand">Economías de escala, capital requerido, fidelidad de marca, regulación. Si las barreras son bajas, el sector atrae competidores rápidamente.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🔄 Sustitutos</h4><span class="tog">＋</span></div><p>Productos alternativos</p><div class="expand">Productos que satisfacen la misma necesidad de forma diferente. Netflix vs. cine; Rappi vs. restaurante físico; Zoom vs. viaje de negocios.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🏭 Poder Proveedores</h4><span class="tog">＋</span></div><p>Control sobre insumos</p><div class="expand">Pocos proveedores o insumos únicos = alto poder de negociación. Pueden comprimir márgenes o condicionar la continuidad del negocio.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🛒 Poder Compradores</h4><span class="tog">＋</span></div><p>Capacidad de negociación</p><div class="expand">Compradores concentrados o muy informados exigen mejores precios. El e-commerce y las reseñas en línea han multiplicado este poder enormemente.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🗣️ Apertura · Debate Estratégico</div>
+    <div class="debate">
+      <div class="sb-wk" style="color:rgba(255,255,255,.5)">Pregunta detonadora</div>
+      <div class="dq">Una PYME caleña que quiere crecer: ¿prioriza su entorno local (Valle del Cauca) o se prepara para competir globalmente desde el inicio?</div>
+      <p>Usen datos reales del <strong>DANE o ProColombia</strong> para sustentar su postura.</p>
+      <div class="timer-row">
+        <div><div class="t-num" id="t3">05:00</div><div class="t-meta">Temporizador</div></div>
+        <div class="t-ctrl"><button class="tbtn tbtn-s" onclick="tgTimer('t3',this)">▶ Iniciar</button><button class="tbtn tbtn-r" onclick="rstTimer('t3')">↺</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🛠️ Taller ABP</div>
+    <h2>Elaboración de Matriz DOFA</h2>
+    <div class="abar"></div>
+    <div class="ex">
+      <h4>🎯 Instrucciones paso a paso</h4>
+      <ol>
+        <li>Usa la <strong>misma empresa del Canvas</strong> (semana 2) para mantener coherencia en tu proyecto del semestre.</li>
+        <li>Realiza el análisis PESTEL: mínimo <strong>2 factores por letra</strong>. Consulta DANE, ProColombia o prensa económica.</li>
+        <li>Aplica las 5 Fuerzas de Porter: califica cada fuerza como Baja / Media / Alta y justifica brevemente.</li>
+        <li>Con esos insumos, construye la <strong>Matriz DOFA</strong> (Debilidades, Oportunidades, Fortalezas, Amenazas).</li>
+        <li>Formula <strong>2 estrategias cruzadas</strong>: una FO (Fortaleza + Oportunidad) y una DA (Debilidad + Amenaza).</li>
+        <li>Pitch de 3 minutos: presenta el análisis y las estrategias resultantes.</li>
+      </ol>
+      <div class="tools-lbl">🔧 Herramientas gratuitas</div>
+      <div class="tools-row">
+        <a class="tool" href="https://www.canva.com/graphs/swot-analysis/" target="_blank"><span class="tdot" style="background:#00C4CC"></span>DOFA en Canva</a>
+        <a class="tool" href="https://miro.com/templates/swot-analysis/" target="_blank"><span class="tdot" style="background:#FFD02F"></span>DOFA en Miro</a>
+        <a class="tool" href="https://www.dane.gov.co" target="_blank"><span class="tdot" style="background:#003580"></span>DANE</a>
+        <a class="tool" href="https://www.procolombia.co" target="_blank"><span class="tdot" style="background:#C8102E"></span>ProColombia</a>
+        <a class="tool" href="https://trends.google.com" target="_blank"><span class="tdot" style="background:#4285F4"></span>Google Trends</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">✅ Autoevaluación</div>
+    <h2>Comprueba tu comprensión</h2>
+    <div class="abar"></div>
+    <div class="qwrap" id="q-s3"></div>
+  </div>
+</section>
+
+<!-- ══ SEMANA 4 ══ -->
+
+<section class="session s4" id="s-4">
+  <div class="s-banner">
+    <div class="sb-wk">Semana 4 · 4 de Marzo</div>
+    <div class="sb-ttl">Comportamiento del<br>Consumidor</div>
+    <div class="sb-pills"><span class="sb-pill">RA-PAAE-02</span><span class="sb-pill">Maslow · Empatía</span></div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">📖 Teoría fundamental</div>
+    <h2>¿Qué mueve al consumidor hoy?</h2>
+    <div class="abar"></div>
+    <p>El comportamiento del consumidor estudia <strong>cómo, cuándo, dónde y por qué</strong> las personas toman decisiones de compra. Integra psicología, sociología, economía conductual y neurociencia aplicada al mercadeo.</p>
+    <div class="analogy">
+      <span class="a-icon">🧊</span>
+      <div class="a-tag">Analogía del Docente</div>
+      <p>La decisión de compra es como un <strong>iceberg</strong>: el precio, el anuncio y el producto son la punta visible (20%). Debajo del agua está el 80% que realmente impulsa la compra: emociones, status social, miedos, recuerdos y sesgos cognitivos. El marketero mediocre ve la punta. El estratega bucea.</p>
+    </div>
+    <div class="sdiv">Pirámide de Maslow aplicada al Marketing</div>
+    <div class="chips">
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🍞 Fisiológicas</h4><span class="tog">＋</span></div><p>Comida, agua, abrigo</p><div class="expand">Marketing: alimentos básicos, medicamentos, ropa funcional. Precio y disponibilidad son los factores decisivos. El mensaje es directo y funcional.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🔒 Seguridad</h4><span class="tog">＋</span></div><p>Salud, empleo, propiedad</p><div class="expand">Marketing: seguros, alarmas, fondos de pensión, productos con garantía larga. El mensaje habla de protección, confianza y tranquilidad.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🤝 Sociales</h4><span class="tog">＋</span></div><p>Pertenencia, comunidad</p><div class="expand">Marketing: redes sociales, ropa de moda, viajes grupales, membresías. El mensaje habla de comunidad, inclusión e identidad de grupo.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🏆 Reconocimiento</h4><span class="tog">＋</span></div><p>Status, logro, respeto</p><div class="expand">Marketing: marcas premium, maestrías, autos de lujo. El mensaje habla de éxito, distinción y el "me lo merezco". El aspiracional vive aquí.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>✨ Autorrealización</h4><span class="tog">＋</span></div><p>Propósito, creatividad</p><div class="expand">Marketing: cursos de desarrollo personal, viajes de experiencia, marcas con propósito social. El mensaje habla de legado, impacto y trascendencia.</div></div>
+    </div>
+    <div class="sdiv">Proceso de Decisión de Compra -- 5 etapas</div>
+    <div class="tl">
+      <div class="tl-s"><div class="tl-ic">1</div><div class="tl-b"><strong>Reconocimiento del problema</strong><span>El consumidor detecta una brecha entre su estado actual y el deseado. Aquí nace la oportunidad de marketing.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">2</div><div class="tl-b"><strong>Búsqueda de información</strong><span>Google, redes sociales, boca a boca, comparadores. La búsqueda hoy es mayoritariamente digital y social.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">3</div><div class="tl-b"><strong>Evaluación de alternativas</strong><span>Compara precio, calidad, marca, reseñas, garantía. Aquí opera el posicionamiento que construiste.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">4</div><div class="tl-b"><strong>Decisión de compra</strong><span>Elige y actúa. Pueden intervenir factores de último momento: oferta flash, opinión de un amigo, fricción en el checkout.</span></div></div>
+      <div class="tl-s"><div class="tl-ic">5</div><div class="tl-b"><strong>Comportamiento postcompra</strong><span>Satisfacción o disonancia cognitiva. Aquí nacen la fidelización, la recomendación boca a boca o el abandono de la marca.</span></div></div>
+    </div>
+    <div class="sdiv">Mapa de Empatía -- 6 dimensiones</div>
+    <div class="chips">
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>👁️ ¿Qué ve?</h4><span class="tog">＋</span></div><p>Su entorno inmediato</p><div class="expand">¿Qué marcas, productos y comportamientos observa a diario? ¿Qué tendencias ve en su barrio, trabajo, redes sociales y familia?</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>👂 ¿Qué oye?</h4><span class="tog">＋</span></div><p>Influencias de su círculo</p><div class="expand">¿Qué dicen sus amigos, familia, colegas e influencers? ¿A qué podcasts, medios o líderes de opinión sigue?</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>💭 ¿Qué piensa y siente?</h4><span class="tog">＋</span></div><p>Miedos y aspiraciones</p><div class="expand">La dimensión más profunda: lo que no verbaliza fácilmente. Sus miedos nocturnos, aspiraciones íntimas y contradicciones internas.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🗣️ ¿Qué dice y hace?</h4><span class="tog">＋</span></div><p>Conducta observable</p><div class="expand">Comportamiento visible: qué declara en público, cómo actúa, posibles contradicciones entre lo que dice y lo que realmente hace.</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>😖 ¿Qué le duele?</h4><span class="tog">＋</span></div><p>Frustraciones y obstáculos</p><div class="expand">Sus mayores fricciones y miedos. ¿Qué le impide alcanzar sus metas? ¿Qué riesgos le quitan el sueño o le generan ansiedad?</div></div>
+      <div class="chip" onclick="flip(this)"><div class="chip-top"><h4>🎁 ¿Qué gana?</h4><span class="tog">＋</span></div><p>Aspiraciones y logros deseados</p><div class="expand">¿Qué define el éxito para él/ella? ¿Qué anhela realmente? Aquí se conecta la propuesta de valor con el deseo profundo del cliente.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🗣️ Apertura · Debate Estratégico</div>
+    <div class="debate">
+      <div class="sb-wk" style="color:rgba(255,255,255,.5)">Pregunta detonadora</div>
+      <div class="dq">En la era de la sobreinformación, ¿somos consumidores racionales o los algoritmos y la publicidad nos manipulan sin que lo notemos?</div>
+      <p>Citen ejemplos de <strong>sesgos cognitivos</strong> explotados por marcas reales (escasez artificial, prueba social, anclaje de precio).</p>
+      <div class="timer-row">
+        <div><div class="t-num" id="t4">05:00</div><div class="t-meta">Temporizador</div></div>
+        <div class="t-ctrl"><button class="tbtn tbtn-s" onclick="tgTimer('t4',this)">▶ Iniciar</button><button class="tbtn tbtn-r" onclick="rstTimer('t4')">↺</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">🛠️ Taller ABP</div>
+    <h2>Construcción del Mapa de Empatía</h2>
+    <div class="abar"></div>
+    <div class="ex">
+      <h4>🎯 Instrucciones paso a paso</h4>
+      <ol>
+        <li>Identifica el <strong>cliente principal</strong> de la empresa que vienes analizando (semanas 2 y 3).</li>
+        <li>Entrevista a <strong>al menos 3 personas</strong> que representen ese perfil. Pregunta: "Cuéntame cómo tomaste tu última decisión de compra de [categoría]…"</li>
+        <li>Con los hallazgos, completa el <strong>Mapa de Empatía</strong> en las 6 dimensiones.</li>
+        <li>Identifica las <strong>2 principales frustraciones</strong> y las <strong>2 principales aspiraciones</strong> de tu consumidor.</li>
+        <li>Conecta los hallazgos con la Propuesta de Valor del Canvas: ¿la empresa realmente resuelve lo que más le duele al cliente?</li>
+        <li>Pitch de 3 minutos: perfil del consumidor + conexión con la propuesta de valor.</li>
+      </ol>
+      <div class="tools-lbl">🔧 Herramientas gratuitas</div>
+      <div class="tools-row">
+        <a class="tool" href="https://miro.com/templates/empathy-map/" target="_blank"><span class="tdot" style="background:#FFD02F"></span>Mapa Empatía Miro</a>
+        <a class="tool" href="https://www.canva.com/graphs/empathy-maps/" target="_blank"><span class="tdot" style="background:#00C4CC"></span>Mapa Empatía Canva</a>
+        <a class="tool" href="https://typeform.com" target="_blank"><span class="tdot" style="background:#262627"></span>Typeform</a>
+        <a class="tool" href="https://forms.google.com" target="_blank"><span class="tdot" style="background:#0F9D58"></span>Google Forms</a>
+        <a class="tool" href="https://www.tiktok.com" target="_blank"><span class="tdot" style="background:#010101"></span>TikTok (observación)</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="c-label">✅ Autoevaluación</div>
+    <h2>Comprueba tu comprensión</h2>
+    <div class="abar"></div>
+    <div class="qwrap" id="q-s4"></div>
+  </div>
+</section>
+<!-- ══ PARCIAL CORTE 1 ══ -->
+<section class="session s5" id="s-5">
+
+  <div class="parcial-hero">
+    <div style="position:relative;z-index:1">
+      <div class="ph-tag">★ Actividad Evaluativa · Corte 1 -- 50%</div>
+      <div class="ph-title">Diagnóstico Estratégico<br>de Marketing</div>
+      <div class="ph-sub">Caso único: <strong>Rappi Colombia</strong> · Todos los grupos trabajan sobre la misma empresa para que la discusión en clase sea rica y comparable.</div>
+      <div class="ph-pills">
+        <span class="ph-pill gold">Semana 5 · 11 de Marzo</span>
+        <span class="ph-pill">50% del Corte 1</span>
+        <span class="ph-pill">RA-PAAE-01, 02, 03</span>
+        <span class="ph-pill">Grupal 3–4 personas</span>
+        <span class="ph-pill">Escrito + Sustentación 5 min</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXTO RAPPI -->
+
+  <div class="card">
+    <div class="c-label" style="color:#C05010">🏢 Contexto del caso -- ¿Qué es Rappi?</div>
+    <h2 style="font-family:'Fraunces',serif">Todo el grupo trabaja sobre esta empresa</h2>
+    <div class="abar" style="background:#C05010"></div>
+    <p><strong>Rappi</strong> es una <strong>superapp colombiana</strong> fundada en Bogotá en 2015 por Simón Borrero, Sebastián Mejía y Felipe Villamarín. Hoy opera en 9 países de Latinoamérica y está valorada en más de USD 5.000 millones -- uno de los primeros unicornios tecnológicos de Colombia. En Cali opera activamente con restaurantes, supermercados y rappitenderos.</p>
+
+```
+<div class="analogy" style="background:linear-gradient(135deg,#FFF5F0,#FEF0E6)">
+  <span class="a-icon">🛵</span>
+  <div class="a-tag" style="color:#7A3800">¿Por qué Rappi como caso?</div>
+  <p style="color:#5A2800">Todos la conocen, muchos la usan, pero pocos la han analizado con rigor estratégico. Rappi tiene un modelo de negocio trilateral complejo, opera en un entorno altamente competitivo, y su consumidor en Cali tiene características muy específicas. Es el caso perfecto para aplicar todas las herramientas del módulo -- y los grupos podrán comparar análisis en clase.</p>
+</div>
+
+<!-- Ficha de contexto -->
+<div class="sdiv" style="margin-top:1.2rem">Ficha de contexto -- usa esta información como punto de partida</div>
+<div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:.88rem">
+    <tr style="background:#2E2E2E;color:white">
+      <th style="padding:8px 10px;text-align:left;font-size:.78rem;letter-spacing:.06em;width:30%">Dato</th>
+      <th style="padding:8px 10px;text-align:left;font-size:.78rem;letter-spacing:.06em">Información</th>
+    </tr>
+    <tr style="background:#FFF5F2">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Fundación y origen</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">2015, Bogotá, Colombia. Primeros en América Latina en el modelo de "superapp de domicilios".</td>
+    </tr>
+    <tr style="background:white">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Modelo de negocio</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">Marketplace trilateral: conecta <strong>usuarios finales</strong> (quieren delivery), <strong>comercios aliados</strong> (restaurantes, tiendas, farmacias) y <strong>rappitenderos</strong> (repartidores independientes en modelo gig).</td>
+    </tr>
+    <tr style="background:#FFF5F2">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Propuesta de valor declarada</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">"Llevar cualquier cosa, de cualquier lugar, en minutos." Foco en <strong>conveniencia radical + variedad + velocidad</strong>.</td>
+    </tr>
+    <tr style="background:white">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Fuentes de ingreso</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">Comisión a comercios (15–30%) · Cuota de domicilio al usuario · <strong>RappiPrime</strong> (suscripción mensual) · Publicidad dentro de la app · Servicios financieros (RappiPay, Rappicredito)</td>
+    </tr>
+    <tr style="background:#FFF5F2">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Competidores directos en Cali</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">iFood · PedidosYa · Servicio propio de restaurantes · Tiendas de barrio con pedidos por WhatsApp · Mercado libre (para productos)</td>
+    </tr>
+    <tr style="background:white">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Desafíos conocidos</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">Rentabilidad históricamente negativa · Controversia por estatus laboral de rappitenderos · Alta tasa de abandono de usuarios (churn) · Competencia agresiva en precios · Regulación pendiente del sector gig en Colombia</td>
+    </tr>
+    <tr style="background:#FFF5F2">
+      <td style="padding:7px 10px;font-weight:700;color:#8B0B1F;border:1px solid #E8D8D4">Dato para investigar</td>
+      <td style="padding:7px 10px;color:#2E2E2E;border:1px solid #E8D8D4">En 2023 Rappi lanzó <strong>Turbo</strong> (entrega en 10 minutos) con minibodegas propias. ¿Cómo cambia esto su modelo? ¿Qué nueva propuesta de valor implica?</td>
+    </tr>
+  </table>
+</div>
+<p style="font-size:.78rem;color:var(--muted);margin-top:.4rem;font-style:italic">Esta ficha es el punto de partida -- el diagnóstico profundo es su tarea.</p>
+
+<div class="warn-box" style="margin-top:.8rem">
+  <span style="font-size:1.1rem">⚠️</span>
+  <p>No se permite cambiar de empresa. Todos los grupos analizan Rappi Colombia. La comparación de enfoques entre grupos es parte del aprendizaje de la sustentación.</p>
+</div>
+```
+
+  </div>
+
+  <!-- TAREAS -->
+
+  <div class="card">
+    <div class="c-label" style="color:var(--uv-red)">📋 Lo que deben entregar -- 4 partes</div>
+    <h2>El diagnóstico conecta todo lo visto</h2>
+    <div class="abar"></div>
+    <p>Cada parte usa las herramientas de una semana específica. <strong>No son secciones sueltas: el PESTEL alimenta el DOFA, el Canvas conecta con el Mapa de Empatía, y todo converge en las recomendaciones.</strong></p>
+
+```
+<div style="margin-top:1rem;display:flex;flex-direction:column;gap:.5rem">
+
+  <div style="display:flex;gap:0;border-radius:12px;overflow:hidden;border:1.5px solid #E8D0D4">
+    <div style="background:var(--uv-red);color:white;padding:1rem;min-width:2.2rem;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900">1</div>
+    <div style="padding:.9rem 1.1rem;flex:1;background:#FAFAFA">
+      <strong style="display:block;margin-bottom:.3rem">Perfil Estratégico <span style="font-size:.72rem;font-weight:700;background:#FFE8EC;color:var(--uv-red);padding:.15rem .5rem;border-radius:10px;margin-left:.3rem">Sem 1 + 2</span></strong>
+      <p style="margin:0;font-size:.88rem;color:var(--ink2);line-height:1.6">¿En qué era del marketing opera Rappi hoy? Justifiquen con evidencia (app, comunicación, servicio). Canvas completo con los 9 bloques. Señalen el bloque más débil y propongan una mejora concreta. Redacten la Propuesta de Valor: <em>"Para [segmento], Rappi ofrece [beneficio] porque [razón para creer]."</em></p>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:0;border-radius:12px;overflow:hidden;border:1.5px solid #E0C8FF">
+    <div style="background:var(--s3);color:white;padding:1rem;min-width:2.2rem;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900">2</div>
+    <div style="padding:.9rem 1.1rem;flex:1;background:#FAFAFA">
+      <strong style="display:block;margin-bottom:.3rem">Diagnóstico del Entorno <span style="font-size:.72rem;font-weight:700;background:#F3E8FF;color:var(--s3);padding:.15rem .5rem;border-radius:10px;margin-left:.3rem">Sem 3</span></strong>
+      <p style="margin:0;font-size:.88rem;color:var(--ink2);line-height:1.6">PESTEL del sector delivery/superapp en Colombia (mín. 2 factores por letra, con fuente). 5 Fuerzas de Porter: Baja/Media/Alta con justificación. DOFA de Rappi con mín. 3 elementos por cuadrante y las 4 estrategias cruzadas: FO, FA, DO y DA.</p>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:0;border-radius:12px;overflow:hidden;border:1.5px solid #B0CCFF">
+    <div style="background:var(--s4);color:white;padding:1rem;min-width:2.2rem;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900">3</div>
+    <div style="padding:.9rem 1.1rem;flex:1;background:#FAFAFA">
+      <strong style="display:block;margin-bottom:.3rem">Perfil del Consumidor <span style="font-size:.72rem;font-weight:700;background:#E8F2FF;color:var(--s4);padding:.15rem .5rem;border-radius:10px;margin-left:.3rem">Sem 4</span></strong>
+      <p style="margin:0;font-size:.88rem;color:var(--ink2);line-height:1.6">Entrevisten a mínimo 3 usuarios reales de Rappi en Cali. Con esos datos construyan el Mapa de Empatía. Identifiquen el nivel de Maslow predominante. Describan las 5 etapas del proceso de decisión de un usuario de Rappi. <strong>Clave:</strong> ¿la Propuesta de Valor de Rappi realmente resuelve el dolor más profundo del usuario?</p>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:0;border-radius:12px;overflow:hidden;border:1.5px solid #CCC">
+    <div style="background:var(--ink);color:white;padding:1rem;min-width:2.2rem;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900">4</div>
+    <div style="padding:.9rem 1.1rem;flex:1;background:#FAFAFA">
+      <strong style="display:block;margin-bottom:.3rem">Recomendaciones Estratégicas</strong>
+      <p style="margin:0;font-size:.88rem;color:var(--ink2);line-height:1.6">3 recomendaciones priorizadas para Rappi Colombia basadas en el diagnóstico. Cada una: específica, factible y con horizonte temporal (corto/mediano/largo). No vale "mejorar la experiencia" -- debe decir cómo, dónde y con qué.</p>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- CRITERIOS -->
+
+  <div class="card">
+    <div class="c-label" style="color:var(--ink)">📊 Criterios de evaluación y formato</div>
+    <h2>¿Cómo se califica? -- 100 puntos = 50% del Corte 1</h2>
+    <div class="abar" style="background:var(--ink)"></div>
+    <div class="criteria-grid">
+      <div class="crit-card cc-red"><div class="crit-pts">25</div><div class="crit-title">Parte 1 · Perfil Estratégico</div><div class="crit-desc">Canvas completo con contenido real de Rappi, era del marketing justificada, PV bien redactada y análisis crítico del bloque débil.</div></div>
+      <div class="crit-card cc-purple"><div class="crit-pts">30</div><div class="crit-title">Parte 2 · Diagnóstico Entorno</div><div class="crit-desc">PESTEL con fuentes citadas, 5 Fuerzas evaluadas y justificadas, DOFA con 4 estrategias cruzadas correctamente formuladas.</div></div>
+      <div class="crit-card cc-blue"><div class="crit-pts">30</div><div class="crit-title">Parte 3 · Consumidor</div><div class="crit-desc">Mapa de Empatía basado en entrevistas reales (mín. 3), Maslow argumentado, proceso de decisión específico y conexión PV–dolor del usuario.</div></div>
+      <div class="crit-card cc-dark"><div class="crit-pts">10</div><div class="crit-title">Parte 4 · Recomendaciones</div><div class="crit-desc">3 recomendaciones específicas, factibles, fundamentadas y con horizonte temporal.</div></div>
+      <div class="crit-card cc-gold"><div class="crit-pts">5</div><div class="crit-title">Sustentación oral</div><div class="crit-desc">5 min exposición + 3 min preguntas. Todos los integrantes deben dominar todo el informe.</div></div>
+    </div>
+
+```
+<div style="margin-top:1.2rem">
+  <div class="info-row">
+    <div class="info-pill">📄 <strong>10–15 páginas</strong> (sin portada ni anexos)</div>
+    <div class="info-pill">🔤 <strong>Fuente 11pt</strong> · Interlineado 1.5</div>
+    <div class="info-pill">📚 <strong>APA 7a ed.</strong> · Mín. 5 fuentes</div>
+    <div class="info-pill">📅 <strong>Entrega:</strong> 11 de marzo</div>
+    <div class="info-pill">👥 <strong>3–4 integrantes</strong> con código estudiantil</div>
+  </div>
+</div>
+
+<div class="warn-box" style="margin-top:1rem">
+  <span style="font-size:1.1rem">⚠️</span>
+  <p>El <strong>Mapa de Empatía sin evidencia de campo</strong> (grabación, foto o transcripción mínima en anexos) no se evalúa -- esa parte queda en cero automáticamente.</p>
+</div>
+<div class="warn-box" style="background:#F0FDF4;border-color:#A7F3D0;margin-top:.5rem">
+  <span style="font-size:1.1rem">🤖</span>
+  <p style="color:#064E3B">IA permitida como apoyo en redacción y búsqueda. Prohibido copiar respuestas de IA sin criterio propio -- el análisis, los hallazgos de entrevistas y las recomendaciones deben ser del grupo.</p>
+</div>
+```
+
+  </div>
+
+  <!-- DOWNLOAD -->
+
+  <div class="card" style="text-align:center;background:linear-gradient(135deg,#FFF5F6,#FFEEF0);border-color:#FFD0D8">
+    <div class="c-label" style="color:var(--uv-red);text-align:center">📥 Versión imprimible</div>
+    <h2 style="font-family:'Fraunces',serif;text-align:center">Descarga el PDF para los estudiantes</h2>
+    <p style="text-align:center;margin-bottom:1.2rem;font-size:.92rem;color:var(--ink2)">Documento con diseño institucional Univalle, ficha completa de Rappi, rúbrica y condiciones de entrega. Listo para imprimir o compartir por correo.</p>
+    <div class="dl-btn-wrap">
+      <a class="dl-btn" href="parcial1_mercadeo_FCA.pdf" download="Parcial1_Mercadeo_Rappi_FCA_Univalle_2026-1.pdf">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar PDF -- Parcial Corte 1 · Caso Rappi
+      </a>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:.6rem">Generado con Claude · Anthropic · Diseño institucional Universidad del Valle</p>
+  </div>
+
+</section>
+</main>
+
+<script>
+const QZ={
+  s1:[
+    {q:'¿Cuál es la diferencia fundamental entre necesidad y deseo?',opts:['Son sinónimos; el marketing los usa indistintamente','La necesidad es básica y universal; el deseo es la forma cultural que adopta esa necesidad','El deseo es más importante que la necesidad para el estratega','La publicidad crea necesidades en el consumidor'],ans:1,fb:['Incorrecto. Son conceptos distintos y fundamentales para segmentar.','✓ Exacto. La sed es una necesidad; querer una gaseosa helada de cierta marca es el deseo moldeado por la cultura.','Incorrecto. Ambos son relevantes; uno sin el otro no explica la conducta de compra.','Incorrecto. La publicidad amplifica deseos existentes, no crea necesidades básicas.']},
+    {q:'¿Qué caracteriza principalmente al Marketing 5.0?',opts:['Producción masiva sin segmentación de mercados','Foco exclusivo en la publicidad televisiva','IA, hiperpersonalización y experiencia omnicanal centrada en el ser humano','Competencia únicamente a través de precios bajos'],ans:2,fb:['Incorrecto. Eso describe la Era de Producción (hasta 1920s).','Incorrecto. La TV es un canal de la era clásica del marketing.','✓ Correcto. Marketing 5.0 aplica tecnología avanzada para potenciar las contribuciones humanas en el customer journey.','Incorrecto. La competencia por precio es una táctica del océano rojo.']},
+    {q:'¿Qué es un prosumidor en el contexto del marketing digital?',opts:['Un proveedor especializado de insumos productivos','Un consumidor que también crea y comparte contenido sobre la marca','Un directivo de marketing con nivel senior en la organización','Un intermediario en la cadena de distribución tradicional'],ans:1,fb:['Incorrecto.','✓ Correcto. El prosumidor (productor + consumidor) crea reseñas, UGC y recomendaciones que co-construyen la reputación de marca.','Incorrecto.','Incorrecto.']}
+  ],
+  s2:[
+    {q:'¿Cuál bloque del Canvas responde "¿qué problema del cliente resolvemos mejor que nadie?"?',opts:['Segmentos de Clientes','Fuentes de Ingresos','Propuesta de Valor','Actividades Clave'],ans:2,fb:['Incorrecto. Segmentos responde ¿a quién?','Incorrecto. Ingresos responde ¿cuánto ganamos?','✓ Correcto. La Propuesta de Valor es el corazón del Canvas: articula la razón de ser de la empresa frente al mercado.','Incorrecto. Actividades responde ¿qué hacemos?']},
+    {q:'¿Qué propone la Estrategia del Océano Azul?',opts:['Competir agresivamente en mercados saturados reduciendo precios','Crear un espacio de mercado sin competencia mediante innovación en valor','Expandirse a mercados internacionales de alto volumen','Copiar las mejores prácticas del líder del sector'],ans:1,fb:['Incorrecto. Eso es la lógica del Océano Rojo.','✓ Correcto. Kim & Mauborgne proponen crear nueva demanda haciendo irrelevante a la competencia, en lugar de pelear por la existente.','Incorrecto.','Incorrecto. El benchmarking no es la esencia del Océano Azul.']},
+    {q:'En el Canvas, ¿qué describe el bloque "Relación con Clientes"?',opts:['El tipo de vínculo que la empresa establece con cada segmento','Los contratos legales firmados con los compradores','La lista de precios diferenciados por cliente','El historial de compras y transacciones del cliente'],ans:0,fb:['✓ Correcto. Define si la relación es autoservicio, asistencia personal, automatizada, comunidad o co-creación.','Incorrecto.','Incorrecto. Eso estaría en Fuentes de Ingresos.','Incorrecto.']}
+  ],
+  s3:[
+    {q:'¿Qué analiza la "T" en el análisis PESTEL?',opts:['Tendencias de consumo juvenil en redes sociales','Factores tecnológicos: innovación, digitalización y automatización','La tasa de desempleo del país','La tributación fiscal del sector industrial'],ans:1,fb:['Incorrecto. Las tendencias de consumo van en el factor Social.','✓ Correcto. La T analiza IA, nuevas plataformas, automatización, I+D y disrupciones tecnológicas que impactan el sector.','Incorrecto. El desempleo está en el factor Económico.','Incorrecto. La tributación está en el factor Legal o Económico.']},
+    {q:'Según Porter, ¿qué fuerza analiza el riesgo de que nuevas empresas entren al mercado?',opts:['Poder de negociación de compradores','Rivalidad entre competidores existentes','Amenaza de nuevos entrantes','Amenaza de productos sustitutos'],ans:2,fb:['Incorrecto.','Incorrecto. La rivalidad analiza los competidores ya presentes en el sector.','✓ Correcto. Esta fuerza evalúa barreras de entrada: capital requerido, economías de escala, patentes y fidelidad de marca.','Incorrecto. Los sustitutos son productos diferentes que cubren la misma necesidad.']},
+    {q:'En la Matriz DOFA, ¿qué es una estrategia FO?',opts:['Usar fortalezas internas para neutralizar amenazas externas','Explotar fortalezas internas para aprovechar oportunidades externas','Superar debilidades aprovechando oportunidades del entorno','Reducir debilidades para evitar amenazas del mercado'],ans:1,fb:['Incorrecto. Esa sería una estrategia FA (Fortalezas-Amenazas).','✓ Correcto. FO combina las capacidades internas más sólidas con las oportunidades externas más atractivas: es la estrategia ofensiva de crecimiento.','Incorrecto. Esa sería una estrategia DO (Debilidades-Oportunidades).','Incorrecto. Esa sería una estrategia DA (Debilidades-Amenazas).']}
+  ],
+  s4:[
+    {q:'¿En qué etapa del proceso de decisión ocurre la "disonancia cognitiva"?',opts:['Reconocimiento del problema','Búsqueda de información','Evaluación de alternativas','Comportamiento postcompra'],ans:3,fb:['Incorrecto.','Incorrecto.','Incorrecto.','✓ Correcto. La disonancia ocurre después de comprar: el cliente duda si tomó la decisión correcta. Aquí nacen la fidelización o el abandono de la marca.']},
+    {q:'Un cliente compra una marca premium para impresionar a sus colegas. Según Maslow, ¿qué necesidad lo motiva?',opts:['Seguridad','Autorrealización','Reconocimiento (Estima)','Fisiológica'],ans:2,fb:['Incorrecto. La seguridad se vincula con protección y estabilidad económica.','Incorrecto. La autorrealización es el deseo de alcanzar el propio potencial máximo.','✓ Correcto. El reconocimiento incluye status, prestigio y respeto de los demás. Las marcas premium operan fundamentalmente en este nivel de la pirámide.','Incorrecto. Las necesidades fisiológicas son básicas: comida, agua, abrigo.']},
+    {q:'¿Cuál dimensión del Mapa de Empatía captura lo que el cliente NO dice pero SÍ siente profundamente?',opts:['¿Qué ve?','¿Qué piensa y siente?','¿Qué dice y hace?','¿Qué oye?'],ans:1,fb:['Incorrecto. "¿Qué ve?" captura el entorno observable del cliente.','✓ Correcto. Es la dimensión más rica y difícil: revela miedos ocultos, aspiraciones íntimas y contradicciones que el cliente no verbaliza espontáneamente.','Incorrecto. "¿Qué dice y hace?" captura comportamientos visibles y declaraciones públicas.','Incorrecto. "¿Qué oye?" captura las influencias externas que recibe.']}
+  ]
+};
+
+const ST={s1:{i:0},s2:{i:0},s3:{i:0},s4:{i:0}};
+
+function renderQ(k){
+  const c=document.getElementById('q-'+k);if(!c)return;
+  const qs=QZ[k],st=ST[k];
+  if(st.i>=qs.length){c.innerHTML=`<div class="q-done"><span class="ck">🎉</span><p>¡Completaste la autoevaluación!<br><strong>3 / 3 preguntas revisadas.</strong></p></div>`;updProg();return;}
+  const q=qs[st.i];
+  c.innerHTML=`<div class="q-cnt">Pregunta ${st.i+1} de ${qs.length}</div><div class="q-txt">${q.q}</div><div class="q-opts">${q.opts.map((o,i)=>`<button class="qo" onclick="chkAns(${i},${q.ans},'${k}',this)">${o}</button>`).join('')}</div><div class="q-fb" id="fb-${k}"></div><button class="q-nxt" id="nx-${k}" onclick="nxtQ('${k}')">Siguiente →</button>`;
+}
+
+function chkAns(chosen,correct,k,btn){
+  btn.closest('.q-opts').querySelectorAll('.qo').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('fb-'+k),nx=document.getElementById('nx-'+k),q=QZ[k][ST[k].i];
+  if(chosen===correct){btn.classList.add('correct');fb.textContent=q.fb[chosen];fb.className='q-fb ok';}
+  else{btn.classList.add('wrong');btn.closest('.q-opts').querySelectorAll('.qo')[correct].classList.add('correct');fb.textContent=q.fb[chosen];fb.className='q-fb err';}
+  nx.style.display='inline-block';
+}
+
+function nxtQ(k){ST[k].i++;renderQ(k);updProg();}
+
+function updProg(){
+  let tot=0,done=0;
+  for(const k in QZ){tot+=QZ[k].length;done+=Math.min(ST[k].i,QZ[k].length);}
+  const p=Math.round(done/tot*100);
+  document.getElementById('pbar').style.width=p+'%';
+  document.getElementById('ppct').textContent=p+'%';
+}
+
+function showS(n,btn){
+  document.querySelectorAll('.session').forEach(s=>s.classList.remove('visible'));
+  document.getElementById('s-'+n).classList.add('visible');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(n<=4) renderQ('s'+n);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function flip(el){el.classList.toggle('open');}
+
+const TM={};
+function tgTimer(id,btn){
+  if(!TM[id])TM[id]={s:300,run:false};
+  const T=TM[id];
+  if(T.run){clearInterval(T.iv);T.run=false;btn.textContent='▶ Reanudar';}
+  else{
+    T.run=true;btn.textContent='⏸ Pausar';
+    T.iv=setInterval(()=>{
+      T.s--;
+      const el=document.getElementById(id);
+      el.textContent=String(Math.floor(T.s/60)).padStart(2,'0')+':'+String(T.s%60).padStart(2,'0');
+      if(T.s<=0){clearInterval(T.iv);T.run=false;btn.textContent='✓ Tiempo';el.style.color='#FF4444';}
+    },1000);
+  }
+}
+function rstTimer(id){
+  if(TM[id]){clearInterval(TM[id].iv);TM[id]=null;}
+  const el=document.getElementById(id);
+  el.textContent='05:00';el.style.color='';
+  el.closest('.timer-row').querySelector('.tbtn-s').textContent='▶ Iniciar';
+}
+
+renderQ('s1');
+</script>
+
+</body>
+</html>
